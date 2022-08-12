@@ -15,6 +15,9 @@ struct Args {
     command: Commands,
 }
 
+// TODO: Average frame time
+// TODO: Average temp
+// TODO: Overview command (A nice print out of the averages and stats)
 #[derive(Subcommand, Debug)]
 enum Commands {
     /// Outputs the average FPS
@@ -62,6 +65,7 @@ async fn average_fps(args: Args) {
     println!("{:?}", average)
 }
 
+// TODO: Make a version that is all strimgs (Dumb I know) and manually handle the inconsistencies and NAs from FrameView
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct FrameViewCSVEntry {
