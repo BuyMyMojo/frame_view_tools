@@ -29,7 +29,7 @@ jobs:
         path: |
           /home/runner/work/frame_view_tools/frame_view_tools/frame_view_tools.exe
         if-no-files-found: error
-        retention-days: 2
+        retention-days: 6
   
   LinuxBuild:
 
@@ -48,4 +48,4 @@ jobs:
         path: |
           /home/runner/work/frame_view_tools/frame_view_tools/frame_view_tools
         if-no-files-found: error
-        retention-days: 2
+        retention-days: 6
