@@ -10,7 +10,7 @@ path = "src/lib/lib.rs"
 [package]
 name = "frame_view_tools"
 description = "A small tool to quickly get some info form FrameView csv files"
-version = "0.3.1"
+version = "0.3.2"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -32,7 +32,7 @@ name = "my_benchmark"
 harness = false
 
 [build]
-rustflags = ["-C", "target-cpu=native"]
+rustflags = ["-C", "target-cpu=haswell"]
 
 [profile.release]
 opt-level = 3
