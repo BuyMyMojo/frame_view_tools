@@ -1,7 +1,16 @@
+[[bin]]
+name = "frame_view_tools"
+path = "src/main.rs"
+
+[lib]
+name = "frame_view_tools_lib"
+path = "src/lib/lib.rs"
+
+
 [package]
 name = "frame_view_tools"
 description = "A small tool to quickly get some info form FrameView csv files"
-version = "0.2.3"
+version = "0.3.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -14,6 +23,13 @@ rayon = "1.5.3"
 serde = { version = "1.0.143", features = ["derive"] }
 serde_with = "2.0.0"
 tokio = { version = "1.20.1", features = ["full"] }
+
+[dev-dependencies]
+criterion = "*"
+
+[[bench]]
+name = "my_benchmark"
+harness = false
 
 [build]
 rustflags = ["-C", "target-cpu=native"]
