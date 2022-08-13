@@ -21,7 +21,7 @@ jobs:
           command: "mkdir /tmp/artifacts"
       - run:
           name: "build"
-          command: "cargo build --release --target-dir /tmp/artifacts"
+          command: "env RUSTFLAGS='-C target-cpu=haswell' cargo build --release --target-dir /tmp/artifacts"
       - store_artifacts:
           path: /tmp/artifacts/release/frame_view_tools
   
@@ -45,14 +45,14 @@ jobs:
                   Invoke-WebRequest -Uri "https://win.rustup.rs/" -OutFile "C:\rustup-init.exe"
                   & C:\rustup-init.exe -y --default-toolchain "stable-x86_64-pc-windows-msvc" --no-modify-path --profile minimal
 
-                  $env:Path += ";C:\Users\circleci\.cargo\bin"
+                  $Env:Path += ";C:\Users\circleci\.cargo\bin"
                   rustc -Vv
                   cargo --version
             - run:
                 name: "build"
                 command: |
-                      $env:Path += ";C:\Users\circleci\.cargo\bin"
-                      cargo build --release --target-dir C:\tmp\artifacts
+                      $Env:Path += ";C:\Users\circleci\.cargo\bin"
+                      $Env:RUSTFLAGS='-C target-cpu=haswell';cargo build --release --target-dir C:\tmp\artifacts
             - store_artifacts:
                 path: C:\tmp\artifacts\release\frame_view_tools.exe
 

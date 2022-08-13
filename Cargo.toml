@@ -31,9 +31,6 @@ criterion = "*"
 name = "my_benchmark"
 harness = false
 
-[build]
-rustflags = ["-C", "target-cpu=haswell"]
-
 [profile.release]
 opt-level = 3
 lto = "thin"
