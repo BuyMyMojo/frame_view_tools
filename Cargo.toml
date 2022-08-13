@@ -10,7 +10,7 @@ path = "src/lib/lib.rs"
 [package]
 name = "frame_view_tools"
 description = "A small tool to quickly get some info form FrameView csv files"
-version = "0.3.0"
+version = "0.3.1"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
