@@ -1,0 +1,51 @@
+name: Rust
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  WindowsBuild:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install cross from git
+      run: cargo install cross --git https://github.com/cross-rs/cross
+    - name: Build
+      run: |
+        cross build --target=x86_64-pc-windows-gnu --release
+        mv /home/runner/work/frame_view_tools/frame_view_tools/target/x86_64-pc-windows-gnu/release/frame_view_tools.exe /home/runner/work/frame_view_tools/frame_view_tools/frame_view_tools.exe
+    - name: Upload build
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: WindowsBuild
+        path: |
+          /home/runner/work/frame_view_tools/frame_view_tools/frame_view_tools.exe
+        if-no-files-found: error
+        retention-days: 2
+  
+  LinuxBuild:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: |
+        cargo build --release
+        mv /home/runner/work/frame_view_tools/frame_view_tools/target/release/frame_view_tools /home/runner/work/frame_view_tools/frame_view_tools/frame_view_tools
+    - name: Upload build
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: LinuxBuild
+        path: |
+          /home/runner/work/frame_view_tools/frame_view_tools/frame_view_tools
+        if-no-files-found: error
+        retention-days: 2

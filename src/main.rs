@@ -5,7 +5,7 @@ use serde_with::FromInto;
 use serde_with::{serde, serde_as, As};
 use std::fs::File;
 
-// Thank you anden3 for helping with this <3
+// Thank you @anden3 for helping with this <3
 #[derive(Deserialize, Serialize, Debug)]
 struct OptionalFloat(pub String);
 
