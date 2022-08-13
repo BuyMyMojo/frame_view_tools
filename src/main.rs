@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 use serde_with::FromInto;
 use serde_with::{serde, serde_as, As};
 use std::fs::File;
+use std::path::Path;
 
 // Thank you @anden3 for helping with this <3
 #[derive(Deserialize, Serialize, Debug)]
@@ -69,26 +70,12 @@ async fn main() {
     let args = Args::parse();
 
     match &args.command {
-        Commands::AverageFPS => average_fps(args).await,
+        Commands::AverageFPS => average_fps(args.in_file.as_path()),
     }
 }
 
-async fn average_fps(args: Args) {
-    let mut entry_vec: Vec<FrameViewCSVEntry> = Vec::new();
-
-    let file = File::open(&args.in_file.as_path()).expect("Unable to open file");
-
-    let mut reader = csv::Reader::from_reader(file);
-
-    for line in reader.deserialize() {
-        let record: FrameViewCSVEntry = match line {
-            Ok(l) => l,
-            Err(e) => panic!("{}", e),
-        };
-        // println!("{:?}", record);
-
-        entry_vec.push(record);
-    }
+fn average_fps(path: &Path) {
+    let entry_vec: Vec<FrameViewCSVEntry> = deserialize_csv_into_vec(path);
 
     let mut vec_of_frame_times = Vec::new();
 
@@ -106,6 +93,24 @@ async fn average_fps(args: Args) {
     let average: f64 = vec_of_fps.par_iter().sum::<f64>() / vec_of_fps.len() as f64;
 
     println!("{:?}", average)
+}
+
+fn deserialize_csv_into_vec(path: &Path) -> Vec<FrameViewCSVEntry> {
+    let mut entry_vec: Vec<FrameViewCSVEntry> = Vec::new();
+
+    let file = File::open(path).expect("Unable to open file");
+    let mut reader = csv::Reader::from_reader(file);
+    for line in reader.deserialize() {
+        let record: FrameViewCSVEntry = match line {
+            Ok(l) => l,
+            Err(e) => panic!("{}", e),
+        };
+        // println!("{:?}", record);
+
+        entry_vec.push(record);
+    }
+
+    entry_vec
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Deserialize)]
